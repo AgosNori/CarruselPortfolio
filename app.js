@@ -19,16 +19,31 @@ var TrandingSlider = new Swiper('.tranding-slider', {
         prevEl: '.swiper-button-prev',
     },
     on: {
-        slideChange: function () {
+        init: function () {
+            // Al inicializar Swiper, muestra la información del slide activo
             const slides = document.querySelectorAll('.tranding-slide');
             slides.forEach(slide => {
                 const info = slide.querySelector('.tranding-slide-info');
                 info.style.display = 'none'; // Ocultar información de todos los slides
             });
   
+            // Mostrar la información del slide activo al iniciar
             const activeSlide = slides[this.activeIndex];
             const activeInfo = activeSlide.querySelector('.tranding-slide-info');
-            activeInfo.style.display = 'block'; // Mostrar solo la información del slide activo
+            activeInfo.style.display = 'block';
+        },
+        slideChange: function () {
+            // Ocultar la información de todos los slides cuando cambia
+            const slides = document.querySelectorAll('.tranding-slide');
+            slides.forEach(slide => {
+                const info = slide.querySelector('.tranding-slide-info');
+                info.style.display = 'none'; // Ocultar información de todos los slides
+            });
+  
+            // Mostrar la información del slide activo
+            const activeSlide = slides[this.activeIndex];
+            const activeInfo = activeSlide.querySelector('.tranding-slide-info');
+            activeInfo.style.display = 'block';
         },
     },
   });
@@ -38,7 +53,10 @@ var TrandingSlider = new Swiper('.tranding-slider', {
     info.style.display = 'none';
   });
   
-  // Mostrar la información del primer slide
-  const firstSlide = document.querySelector('.tranding-slide');
-  const firstInfo = firstSlide.querySelector('.tranding-slide-info');
-  firstInfo.style.display = 'block';
+  // Mostrar la información del slide que esté centrado al cargar la página
+  window.addEventListener('load', function () {
+    const activeSlide = document.querySelector('.swiper-slide-active');
+    const activeInfo = activeSlide.querySelector('.tranding-slide-info');
+    activeInfo.style.display = 'block'; // Mostrar la información del slide activo centrado
+  });
+  
